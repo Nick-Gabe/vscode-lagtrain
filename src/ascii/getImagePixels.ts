@@ -1,11 +1,6 @@
 import Jimp from 'jimp';
 
-export type RGBA = {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
-}
+export type RGBA = Record<'r' | 'g' | 'b' | 'a', number>
 
 export type Pixel = (RGBA | string)[]
 
