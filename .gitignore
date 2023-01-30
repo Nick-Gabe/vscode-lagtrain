@@ -1,1 +1,3 @@
 node_modules/
+dist/
+render-result.txt
