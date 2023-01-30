@@ -9,7 +9,10 @@ const paramsPassed = verifyParams();
     const fps = Number(paramsPassed.fps) || 15;
     const scale = Number(paramsPassed.scale) || 0.3;
     const palette = paramsPassed.palette || 'default';
-    const timer = Boolean(paramsPassed.timer) || true;
+    let timer = false;
+
+    if(paramsPassed.timer === 'true') timer = true;
+    else if(paramsPassed.timer === 'false') timer = false;
 
     await extractFrames({
       src: `./assets/${paramsPassed.src}`,
