@@ -1,5 +1,5 @@
 import ffmpegExtractFrames from "ffmpeg-extract-frames";
-import { mkdirSync, readdirSync } from "fs";
+import { mkdirSync, readdirSync, writeFileSync } from "fs";
 import fsExtra from "fs-extra";
 import getVideoDurationInSeconds from "get-video-duration";
 import { watchFrameLoading } from "./loading";
@@ -23,10 +23,27 @@ export const extractFrames = async (params: Params) => {
 
   const videoDuration = Math.floor(await getVideoDurationInSeconds(src));
   const videoMaxFrames = videoDuration * fps;
-  if (folder.length === videoMaxFrames) return params.callback(outputDir);
-  else if (folder.length !== 0) {
+
+  const infoFile = await import(`../../${outputDir}/_info.json`).catch(x => x);
+  if (infoFile?.fps == fps) {
+    const differentFrameQuantity = folder.length - 1 - videoMaxFrames;
+
+    if (differentFrameQuantity > 0 && differentFrameQuantity < 20) {
+      return params.callback(outputDir);
+    }
+  }
+
+  if (folder.length !== 0) {
     fsExtra.emptyDirSync(outputDir);
   }
+
+  // stores command info
+  const cachedInfo = {
+    fps,
+  };
+  writeFileSync(outputDir + "/_info.json", JSON.stringify(cachedInfo), {
+    encoding: "utf-8",
+  });
 
   const filePath = `${outputDir}/frame-%d.jpg`;
 
@@ -41,7 +58,7 @@ export const extractFrames = async (params: Params) => {
     fps,
   });
 
-  // rescaleFrames(outputDir, params.scale, 
-    params.callback(outputDir)
-    // );
+  // rescaleFrames(outputDir, params.scale,
+  params.callback(outputDir);
+  // );
 };
