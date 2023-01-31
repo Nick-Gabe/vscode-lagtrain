@@ -1,6 +1,6 @@
-import { generateVideo } from "./ascii/generateVideo";
 import { extractFrames } from "./extractFrames";
 import { verifyParams } from "./params";
+import { generateAsciiFrames } from "./ascii/generateAsciiFrames";
 
 const paramsPassed = verifyParams();
 
@@ -8,17 +8,20 @@ const paramsPassed = verifyParams();
   if (paramsPassed) {
     const fps = Number(paramsPassed.fps) || 15;
     const scale = Number(paramsPassed.scale) || 0.3;
-    const palette = paramsPassed.palette || 'default';
-    let timer = paramsPassed.timer === 'false' ? false : true;
+    const palette = paramsPassed.palette || "default";
+    let timer = paramsPassed.timer === "false" ? false : true;
 
     await extractFrames({
       src: `./assets/${paramsPassed.src}`,
       scale,
       fps,
       callback: dir => {
-        generateVideo(dir, {
-          fps, scale, palette
-        }, timer);
+        generateAsciiFrames(dir, {
+          fps,
+          scale,
+          palette,
+          timer,
+        });
       },
     });
   }

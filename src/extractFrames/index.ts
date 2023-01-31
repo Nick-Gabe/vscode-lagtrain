@@ -3,7 +3,6 @@ import { mkdirSync, readdirSync, writeFileSync } from "fs";
 import fsExtra from "fs-extra";
 import getVideoDurationInSeconds from "get-video-duration";
 import { watchFrameLoading } from "./loading";
-// import { rescaleFrames } from "./rescaleFrames";
 
 type Params = {
   src: string;
@@ -19,14 +18,14 @@ export const extractFrames = async (params: Params) => {
   const videoName = src.match(/(?<=assets\/).*(?=.mp4)/)?.[0];
   const outputDir = "./dist/frames/" + videoName;
   mkdirSync(outputDir, { recursive: true });
-  const folder = readdirSync(outputDir);
+  const folder = readdirSync(outputDir).filter(x => x.endsWith(".jpg"));
 
   const videoDuration = Math.floor(await getVideoDurationInSeconds(src));
   const videoMaxFrames = videoDuration * fps;
 
   const infoFile = await import(`../../${outputDir}/_info.json`).catch(x => x);
   if (infoFile?.fps == fps) {
-    const differentFrameQuantity = folder.length - 1 - videoMaxFrames;
+    const differentFrameQuantity = folder.length - videoMaxFrames;
 
     if (differentFrameQuantity > 0 && differentFrameQuantity < 20) {
       return params.callback(outputDir);
@@ -58,7 +57,5 @@ export const extractFrames = async (params: Params) => {
     fps,
   });
 
-  // rescaleFrames(outputDir, params.scale,
   params.callback(outputDir);
-  // );
 };
