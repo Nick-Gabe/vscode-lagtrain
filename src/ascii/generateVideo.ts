@@ -28,7 +28,7 @@ export const generateVideo = (path: string, options: Options) => {
 
   const frames = readdirSync(path).filter(x => x.endsWith(".txt"));
   const fpsDelay = 1000 / options.fps;
-  let curFrame = 0;
+  let curFrame = 1;
   let interval: NodeJS.Timer;
 
   setTimeout(() => {
