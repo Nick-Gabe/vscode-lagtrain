@@ -28,11 +28,14 @@ export const generateAsciiFrames = (path: string, options: Options) => {
     }
   );
 
-  const generateImage = (frame: number = 1) => {
+  const generateImage = (frame: number = 1): unknown => {
     if (frame > imageFrames.length) return startVideo();
 
-    const imageInputPath = `${path}/frame-${frame}.jpg`;
-    const frameOutputPath = `${path}/frame-${frame}.txt`;
+    const frameStr = `frame-${frame}`;
+    const imageInputPath = `${path}/${frameStr}.jpg`;
+    const frameOutputPath = `${path}/${frameStr}.txt`;
+
+    if (textFrames.includes(`${frameStr}.txt`)) return generateImage(++frame);
 
     getImagePixels(imageInputPath, options.scale, (pixels) => {
       imageToAscii(frameOutputPath, pixels, options.palette, () =>
