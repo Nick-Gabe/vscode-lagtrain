@@ -28,7 +28,7 @@ export const extractFrames = async (params: Params) => {
     (x) => x
   );
 
-  const infoFileEntries = Object.entries(infoFile?.default);
+  const infoFileEntries = Object.entries(infoFile?.default || {});
   const paramEntries = Object.entries(params);
 
   const compareStoredInfo = ([key, val]: [string, unknown]) => {
