@@ -2,7 +2,7 @@ import ffmpegExtractFrames from "ffmpeg-extract-frames";
 import { mkdirSync, readdirSync, writeFileSync } from "fs";
 import fsExtra from "fs-extra";
 import getVideoDurationInSeconds from "get-video-duration";
-import { watchFrameLoading } from "./loading";
+import { printFrameLoading } from "./loading";
 
 type Params = {
   src: string;
@@ -18,12 +18,14 @@ export const extractFrames = async (params: Params) => {
   const videoName = src.match(/(?<=assets\/).*(?=.mp4)/)?.[0];
   const outputDir = "./dist/frames/" + videoName;
   mkdirSync(outputDir, { recursive: true });
-  const folder = readdirSync(outputDir).filter(x => x.endsWith(".jpg"));
+  const folder = readdirSync(outputDir).filter((x) => x.endsWith(".jpg"));
 
   const videoDuration = Math.floor(await getVideoDurationInSeconds(src));
   const videoMaxFrames = videoDuration * fps;
 
-  const infoFile = await import(`../../${outputDir}/_info.json`).catch(x => x);
+  const infoFile = await import(`../../${outputDir}/_info.json`).catch(
+    (x) => x
+  );
   if (infoFile?.fps == fps) {
     const differentFrameQuantity = folder.length - videoMaxFrames;
 
@@ -46,7 +48,7 @@ export const extractFrames = async (params: Params) => {
 
   const filePath = `${outputDir}/frame-%d.jpg`;
 
-  watchFrameLoading(() => readdirSync(outputDir).length, videoMaxFrames, {
+  printFrameLoading(() => readdirSync(outputDir).length, videoMaxFrames, {
     success: "✅ Frames extracted successfully",
     loading: "Extracting Video Frames",
   });

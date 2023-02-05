@@ -1,8 +1,8 @@
 import { readdirSync } from "fs";
 import { getImagePixels } from "./getImagePixels";
 import { imageToAscii } from "./imageToAscii";
-import { watchFrameLoading } from "../extractFrames/loading";
 import { generateVideo } from "./generateVideo";
+import { printFrameLoading } from "../extractFrames/loading";
 
 type Options = {
   fps: number;
@@ -12,16 +12,16 @@ type Options = {
 };
 
 export const generateAsciiFrames = (path: string, options: Options) => {
-  const next = () => generateVideo(path, options);
+  const startVideo = () => generateVideo(path, options);
 
-  const imageFrames = readdirSync(path).filter(x => x.endsWith(".jpg"));
-  const textFrames = readdirSync(path).filter(x => x.endsWith(".txt"));
+  const imageFrames = readdirSync(path).filter((x) => x.endsWith(".jpg"));
+  const textFrames = readdirSync(path).filter((x) => x.endsWith(".txt"));
 
-  if (imageFrames.length === textFrames.length) return next();
+  if (imageFrames.length === textFrames.length) return startVideo();
 
-  watchFrameLoading(
-    () => readdirSync(path).filter(x => x.endsWith(".txt")).length,
-    readdirSync(path).filter(x => x.endsWith(".jpg")).length,
+  printFrameLoading(
+    () => readdirSync(path).filter((x) => x.endsWith(".txt")).length,
+    readdirSync(path).filter((x) => x.endsWith(".jpg")).length,
     {
       loading: "Generating ASCII frames",
       success: "✅ ASCII frames generated!",
@@ -29,14 +29,12 @@ export const generateAsciiFrames = (path: string, options: Options) => {
   );
 
   const generateImage = (frame: number = 1) => {
-    if (frame === imageFrames.length) return next();
+    if (frame > imageFrames.length) return startVideo();
 
     const imageInputPath = `${path}/frame-${frame}.jpg`;
     const frameOutputPath = `${path}/frame-${frame}.txt`;
 
-    console.log("🥿", imageInputPath, frameOutputPath);
-
-    getImagePixels(imageInputPath, options.scale, pixels => {
+    getImagePixels(imageInputPath, options.scale, (pixels) => {
       imageToAscii(frameOutputPath, pixels, options.palette, () =>
         generateImage(++frame)
       );
