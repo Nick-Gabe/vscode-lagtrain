@@ -599,13 +599,6 @@ exif-parser@^0.1.12:
   resolved "https://registry.yarnpkg.com/exif-parser/-/exif-parser-0.1.12.tgz#58a9d2d72c02c1f6f02a0ef4a9166272b7760922"
   integrity sha512-c2bQfLNbMzLPmzQuOr8fy0csy84WmwnER81W88DzTp9CYNPJ6yzOj2EZAh9pywYpqHnshVLHQJ8WzldAyfY+Iw==
 
-ffmpeg-extract-frame@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ffmpeg-extract-frame/-/ffmpeg-extract-frame-1.0.2.tgz#2c0c94d920031f5d737bd0f2c5a2db5e76ed2af3"
-  integrity sha512-kjVOk1onUbcnJtPw1ELt/5rFFXAqDp1QxfT51hJE5y2Sd8OU0xDJVSkuq+L9JY8m0zAkBCpn0FQy6lJqc9jong==
-  dependencies:
-    fluent-ffmpeg "^2.1.2"
-
 ffmpeg-extract-frames@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/ffmpeg-extract-frames/-/ffmpeg-extract-frames-2.0.2.tgz#81d14f78c67a4dd9e3afc3f9862f7bf891ff7a81"

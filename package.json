@@ -18,7 +18,6 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "ffmpeg-extract-frame": "^1.0.2",
     "ffmpeg-extract-frames": "^2.0.2",
     "fs-extra": "^11.1.0",
     "get-video-duration": "^4.1.0",
