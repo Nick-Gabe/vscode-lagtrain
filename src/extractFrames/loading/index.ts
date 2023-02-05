@@ -10,7 +10,9 @@ export const printFrameLoading = async (
 ) => {
   console.clear();
 
-  const percentage = Math.floor((cur() / max) * 100) / 10;
+  const currentValue = cur();
+
+  const percentage = Math.floor((currentValue / max) * 100) / 10;
   if (percentage >= 10) {
     console.log(text?.success);
     return;
@@ -21,7 +23,7 @@ export const printFrameLoading = async (
 
   console.log(`
     \r${text?.loading} (${percentage * 10}%)
-    \r${completed + missing}
+    \r${completed + missing} ${currentValue} / ${max}
   `);
 
   setTimeout(() => {

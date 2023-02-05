@@ -15,6 +15,7 @@ const paramsPassed = verifyParams();
       src: `./assets/${paramsPassed.src}`,
       scale,
       fps,
+      palette,
       callback: dir => {
         generateAsciiFrames(dir, {
           fps,
