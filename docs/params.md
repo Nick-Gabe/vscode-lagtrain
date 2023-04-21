@@ -6,7 +6,7 @@ npm start video.mp4 -- --<name>=value
 You can place one or combine multiple flags, if you're placing multiple, just add another `--<name>=value` with a space after the last one.
 ### Here's an example:
 ```
-npm start -- --fps=1 --scale=0.1 --palette=myPalette --timer=false
+npm start video.mp4 -- --fps=1 --scale=0.1 --palette=myPalette --timer=false
 ```
 
 Those are the flags you can use and their default values:
